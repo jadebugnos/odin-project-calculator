@@ -15,4 +15,3 @@ function divide(...num) {
     return num.reduce((a, b) => a / b)
 }
 
-console.log(divide(1000, 18))

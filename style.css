@@ -1,3 +1,25 @@
-p {
-    font-size: 10rem;
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #3e3e5f;
+    --secondary-color: #e4ebe8;
+    --complementary-color: #9B1B30;
+}
+
+body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.calc-body {
+    border: 5px solid black;
+    height: 60%;
+    width: 40%;
 }
