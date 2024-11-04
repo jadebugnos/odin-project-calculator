@@ -32,4 +32,15 @@ function operate(num1, num2, operator) {
     }
 }
 
-console.log(operate(operandOne, operandtwo, operator))
+function populate() {
+    const display = document.getElementById('display');
+    const buttonsContainer = document.querySelector('#button-containers');
+
+    buttonsContainer.addEventListener('click', (e) => {
+        if (e.target !== e.currentTarget && e.target.classList.contains('digit')) {
+            display.textContent += e.target.value;
+        }
+    })
+}
+
+populate()
