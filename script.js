@@ -39,36 +39,33 @@ function populate() {
     let acc = '';
 
     buttonsContainer.addEventListener('click', (e) => {
+        //this is for the numbers buttons when clicked it will update ui display
         if (e.target !== e.currentTarget && e.target.classList.contains('digit')) {
             display.textContent += e.target.value;
             acc += e.target.value;
         }
-
+        //this is for operator buttons when pushed it will update operator then push the number to the array
         if (e.target !== e.currentTarget && e.target.classList.contains('operator')) {
-            switch (e.target.id) {
-                case 'plus':
-                    operator = '+'
-                    firstOperand.push(Number(acc))
-                    console.log(firstOperand, operator)
-                    break;
-                case 'minus':
-                    operator = '-';
-                    firstOperand.push(Number(acc))
-                    console.log(firstOperand, operator)
-                    break;
-                case 'times':
-                    operator = '*';
-                    firstOperand.push(Number(acc))
-                    console.log(firstOperand, operator)
-                    break;
-                case 'divide':
-                    operator = '/';
-                    firstOperand.push(Number(acc))
-                    console.log(firstOperand, operator)
-                    break;
-            }
+            handleOperatorClick(e.target.id, acc)
         }
     })
+}
+
+
+function handleOperatorClick(targetId, acc) {
+    const operatorMap = {
+        plus: '+',
+        minus: '-',
+        times: '*',
+        divide: '/'
+    }
+
+    operator = operatorMap[targetId]
+    let converted = Number(acc)
+    if (operator) {
+        firstOperand.push(converted)
+        console.log(firstOperand, operator)
+    }
 }
 
 populate()
