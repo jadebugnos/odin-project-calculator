@@ -17,7 +17,6 @@ function divide(...num) {
 
 
 let firstOperand = [];
-let secondOperand = [];
 let operator;
 
 function operate(operator, operands) {
@@ -54,7 +53,7 @@ function populate() {
             } else if (e.target.classList.contains('operator')) {
                 handleOperatorClick(e.target.id, acc, display)
             } else if (e.target.id === 'equals') {
-                handleEqualClick()
+                handleEqualClick(display)
             }
         }
     })
@@ -66,16 +65,18 @@ function handleDisplay(value, display) {
 
 // this is still buggy I have to figure out how to make = work
 function handleOperatorClick(targetId) {
-        operator = operatorMap[targetId]
+    operator = operatorMap[targetId]
+    if (acc !== "") {
         firstOperand.push(Number(acc));
         acc = "";
-        console.log(acc)
-        console.log(firstOperand, operator)
+    }
 }
 
-function handleEqualClick() {
-    if (acc !== '') firstOperand.push(Number(acc));
-    acc = "";
+function handleEqualClick(display) {
+    if (acc !== "") {
+        firstOperand.push(Number(acc));
+        acc = "";
+    }
 
     let total = operate(operator, firstOperand)
     console.log(firstOperand, operator)
