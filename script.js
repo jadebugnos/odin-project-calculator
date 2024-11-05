@@ -20,68 +20,68 @@ let firstOperand = [];
 let secondOperand = [];
 let operator;
 
-function operate(num1, num2, operator) {
+function operate(operator, operands) {
     switch (operator) {
         case '+':
-            return add(num1, num2);
+            return add(...operands);
         case '-':
-            return subtract(num1, num2);
+            return subtract(...operands);
         case '*':
-            return multiply(num1, num2);
+            return multiply(...operands);
         case '/':
-            return divide(num1, num2);
+            return divide(...operands);
     }
 }
 
-
-let active = false;
+let acc = '';
+const operatorMap = {
+    plus: '+',
+    minus: '-',
+    times: '*',
+    divide: '/',
+}
 
 function populate() {
     const display = document.getElementById('display');
     const buttonsContainer = document.querySelector('#button-containers');
-    let acc = '';
 
     buttonsContainer.addEventListener('click', (e) => {
 
         if (e.target !== e.currentTarget) {
             if (e.target.classList.contains('digit')) {
-                if (!active) {
-                    handleDisplay(e.target.value, display)
-                    acc += e.target.value;
-                } else {
-                    handleDisplay(e.target.value, display)
-                }
+                acc += e.target.value;
+                handleDisplay(acc, display)
             } else if (e.target.classList.contains('operator')) {
-                handleOperatorClick(e.target.id, acc)
+                handleOperatorClick(e.target.id, acc, display)
+            } else if (e.target.id === 'equals') {
+                handleEqualClick()
             }
         }
     })
 }
 
 function handleDisplay(value, display) {
-    active ? display.textContent = value :
-        display.textContent += value
-        active = false
-        console.log(active)
+    display.textContent = value;
 }
 
-
-function handleOperatorClick(targetId, acc) {
-    const operatorMap = {
-        plus: '+',
-        minus: '-',
-        times: '*',
-        divide: '/'
-    }
-
-    operator = operatorMap[targetId]
-    let converted = Number(acc)
-    if (operator) {
-        firstOperand.push(converted)
+// this is still buggy I have to figure out how to make = work
+function handleOperatorClick(targetId) {
+        operator = operatorMap[targetId]
+        firstOperand.push(Number(acc));
+        acc = "";
+        console.log(acc)
         console.log(firstOperand, operator)
-        active = true;
-        console.log(active)
-    }
+}
+
+function handleEqualClick() {
+    if (acc !== '') firstOperand.push(Number(acc));
+    acc = "";
+
+    let total = operate(operator, firstOperand)
+    console.log(firstOperand, operator)
+    handleDisplay(total, display)
+
+    firstOperand = [total];
 }
 
 populate()
