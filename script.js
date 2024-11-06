@@ -52,7 +52,7 @@ function populate() {
                 handleDisplay(acc, display)
             } else if (e.target.classList.contains('operator')) {
                 handleOperatorClick(e.target.id)
-            } else if (e.target.id === 'equals') {
+            } else if (e.target.id === 'equals' && operands.length) {
                 handleEqualClick(display)
             } else if (e.target.id === 'clear') {
                 handleClearClick(display)
@@ -80,11 +80,16 @@ function handleEqualClick(display) {
         acc = "";
     }
 
-    let total = operate(operator, operands)
-    console.log(operands, operator)
-    handleDisplay(total, display)
+    let total;
 
-    operands = [total];
+    if (operands.length >= 2) {
+       total = operate(operator, operands);
+       handleDisplay(total, display);
+       operands = [total];
+    }
+
+
+    console.log(operands, operator);
 }
 
 function handleClearClick(display) {
