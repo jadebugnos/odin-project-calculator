@@ -51,7 +51,7 @@ function populate() {
                 acc += e.target.value;
                 handleDisplay(acc, display)
             } else if (e.target.classList.contains('operator')) {
-                handleOperatorClick(e.target.id)
+               handleOperatorClick(e.target.id, display)
             } else if (e.target.id === 'equals' && operands.length) {
                 handleEqualClick(display)
             } else if (e.target.id === 'clear') {
@@ -66,12 +66,16 @@ function handleDisplay(value, display) {
 }
 
 
-function handleOperatorClick(targetId) {
-    operator = operatorMap[targetId]
+function handleOperatorClick(targetId, display) {
     if (acc !== "") {
         operands.push(Number(acc));
         acc = "";
     }
+    console.log(operands)
+    if (operator) {
+        handleEqualClick(display)
+    }
+    operator = operatorMap[targetId]
 }
 
 function handleEqualClick(display) {
@@ -79,9 +83,7 @@ function handleEqualClick(display) {
         operands.push(Number(acc));
         acc = "";
     }
-
     let total;
-
     if (operands.length >= 2) {
        total = operate(operator, operands);
        handleDisplay(total, display);
