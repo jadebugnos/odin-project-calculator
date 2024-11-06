@@ -4,15 +4,19 @@ function add(...addends) {
 
 
 function subtract(...num) {
-    return num.reduce((a, b) => a - b)
+    return num.length ? num.reduce((a, b) => a - b) : 0;
 }
 
 function multiply(...num) {
-    return num.reduce((a, b) => a * b, 1)
+    return num.length ? num.reduce((a, b) => a * b, 1) : 0;
 }
 
 function divide(...num) {
-    return num.reduce((a, b) => a / b)
+    if (num.includes(0)) {
+        alert('You cannot divide by zero')
+        return 0;
+    }
+    return num.length ? num.reduce((a, b) => a / b) : 0;
 }
 
 
@@ -71,18 +75,22 @@ function handleOperatorClick(targetId, display) {
         operands.push(Number(acc));
         acc = "";
     }
-    console.log(operands)
+    
     if (operator) {
         handleEqualClick(display)
     }
+    //assigns new operator after operate is executed in handleEqualClick
+    //avoids using the current targetId in operate execution
     operator = operatorMap[targetId]
+    console.log(operands, operator)
 }
 
 function handleEqualClick(display) {
     if (acc !== "") {
         operands.push(Number(acc));
         acc = "";
-    }
+    } 
+
     let total;
     if (operands.length >= 2) {
        total = operate(operator, operands);
@@ -90,14 +98,14 @@ function handleEqualClick(display) {
        operands = [total];
     }
 
-
     console.log(operands, operator);
 }
 
 function handleClearClick(display) {
     display.textContent = "";
-    operands = [];
+    operands.length = 0;
     acc = "";
+    operator = null;
 }
 
 populate()
