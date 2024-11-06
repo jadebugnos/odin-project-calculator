@@ -56,7 +56,7 @@ function populate() {
                 acc += e.target.value;
                 handleDisplay(acc, display)
             } else if (e.target.classList.contains('operator')) {
-               handleOperatorClick(e.target.id, display)
+                handleOperatorClick(e.target.id, display)
             } else if (e.target.id === 'equals' && operands.length) {
                 handleEqualClick(display)
             } else if (e.target.id === 'clear') {
@@ -76,6 +76,7 @@ function handleDisplay(value, display) {
 
 
 function handleOperatorClick(targetId, display) {
+    //makes sure it doesn't push an empty string into the array
     if (acc !== "") {
         operands.push(Number(acc));
         acc = "";
@@ -91,18 +92,20 @@ function handleOperatorClick(targetId, display) {
 }
 
 function handleEqualClick(display) {
+    //makes sure it doesn't push an empty string into the array
     if (acc !== "") {
         operands.push(Number(acc));
         acc = "";
-    } 
+    }
 
     let total;
     //only executes if the operands array has two values
     if (operands.length >= 2) {
-       total = operate(operator, operands);
-       handleDisplay(total, display);
-       operands = [total];
+        total = operate(operator, operands);
+        handleDisplay(total, display);
+        operands = [total]; //sets the item of operands array to the total of operation
     }
+
     operator = "";
     console.log(operands, operator);
 }
@@ -115,26 +118,33 @@ function handleClearClick(display) {
 }
 
 function handleDecimalClick(display) {
-    lastChar = acc.charAt(acc.length - 1);
-    //if the last character is not a decimal point, add 1
-    if(lastChar !== '.') {
+    let lastChar = acc.charAt(acc.length - 1);
+    //if the last character is not a decimal point, add one
+    if (lastChar !== '.') {
         acc += '.';
         display.textContent += '.';
         console.log(acc)
-        //if it is remove the decimal point
+        //if it is, remove the decimal point
     } else if (lastChar === '.') {
         acc = acc.slice(0, -1);
         console.log(acc)
-        display.textContent = display.textContent.slice(0, -1);
+        display.textContent = acc;
     }
 }
-//convert positive integer to negative
+
 function handleNegativeClick(display) {
-    display.textContent = '-' + acc;
-    acc = '-' + acc;
-
-
-    console.log(acc)
+    let firstChar = acc.charAt(0);
+    //if the first character is negative, remove it
+    if (firstChar === '-') {
+        acc = acc.slice(1);
+        display.textContent = acc;
+        console.log(acc)
+    //if it isn't add one
+    } else {
+        acc = '-' + acc;
+        display.textContent = acc;
+        console.log(acc);
+    }
 }
 
 populate()
