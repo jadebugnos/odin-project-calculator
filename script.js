@@ -44,6 +44,7 @@ const operatorMap = {
     divide: '/',
 }
 
+//contains all buttons eventlisteners and call respective functions when clicked
 function populate() {
     const display = document.getElementById('display');
     const buttonsContainer = document.querySelector('#button-containers');
@@ -68,7 +69,7 @@ function populate() {
         }
     })
 }
-
+//updates the display in the UI
 function handleDisplay(value, display) {
     display.textContent = value;
 }
@@ -79,7 +80,7 @@ function handleOperatorClick(targetId, display) {
         operands.push(Number(acc));
         acc = "";
     }
-    
+    //if operator already has a value, call equal function
     if (operator) {
         handleEqualClick(display)
     }
@@ -96,7 +97,7 @@ function handleEqualClick(display) {
     } 
 
     let total;
-
+    //only executes if the operands array has two values
     if (operands.length >= 2) {
        total = operate(operator, operands);
        handleDisplay(total, display);
@@ -105,7 +106,7 @@ function handleEqualClick(display) {
     operator = "";
     console.log(operands, operator);
 }
-
+//resets all values
 function handleClearClick(display) {
     display.textContent = "";
     operands.length = 0;
@@ -114,13 +115,25 @@ function handleClearClick(display) {
 }
 
 function handleDecimalClick(display) {
-    acc += '.';
-    display.textContent += '.';
+    lastChar = acc.charAt(acc.length - 1);
+    //if the last character is not a decimal point, add 1
+    if(lastChar !== '.') {
+        acc += '.';
+        display.textContent += '.';
+        console.log(acc)
+        //if it is remove the decimal point
+    } else if (lastChar === '.') {
+        acc = acc.slice(0, -1);
+        console.log(acc)
+        display.textContent = display.textContent.slice(0, -1);
+    }
 }
-
+//convert positive integer to negative
 function handleNegativeClick(display) {
     display.textContent = '-' + acc;
     acc = '-' + acc;
+
+
     console.log(acc)
 }
 
