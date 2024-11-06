@@ -60,6 +60,10 @@ function populate() {
                 handleEqualClick(display)
             } else if (e.target.id === 'clear') {
                 handleClearClick(display)
+            } else if (e.target.id === 'decimal') {
+                handleDecimalClick(display)
+            } else if (e.target.id === 'negative') {
+                handleNegativeClick(display)
             }
         }
     })
@@ -92,12 +96,13 @@ function handleEqualClick(display) {
     } 
 
     let total;
+
     if (operands.length >= 2) {
        total = operate(operator, operands);
        handleDisplay(total, display);
        operands = [total];
     }
-
+    operator = "";
     console.log(operands, operator);
 }
 
@@ -105,7 +110,18 @@ function handleClearClick(display) {
     display.textContent = "";
     operands.length = 0;
     acc = "";
-    operator = null;
+    operator = "";
+}
+
+function handleDecimalClick(display) {
+    acc += '.';
+    display.textContent += '.';
+}
+
+function handleNegativeClick(display) {
+    display.textContent = '-' + acc;
+    acc = '-' + acc;
+    console.log(acc)
 }
 
 populate()
