@@ -80,17 +80,23 @@ function populate() {
 //this is for keyboard support. i'll do this later
 function handleKeyboardSupport(event, display) {
     const numbers = '1234567890';
+
     if (numbers.includes(event.key)) {
         acc += event.key;
         display.textContent = acc;
     } else if (event.key === operatorMap[event.key]) {
         handleOperatorClick(event.key, display);
     } else if ((event.key === '=' || event.key === 'Enter') &&
-         operands.length && operator) {
+        operands.length && operator) {
         handleEqualClick(display);
-    }
+    } else if (event.key === '.') {
+        handleDecimalClick(display);
+    } else if (event.key === 'Backspace') {
+        handleBackSpacePress(display);
+    } else if (event.key === 'Delete') {
+        handleClearClick(display);
+    } 
 
-    
 }
 
 //updates the display in the UI
@@ -170,6 +176,11 @@ function handleNegativeClick(display) {
         display.textContent = acc;
         console.log(acc);
     }
+}
+
+function handleBackSpacePress(display) {
+    acc = acc.slice(0, -1);
+    display.textContent = acc;
 }
 
 populate()
