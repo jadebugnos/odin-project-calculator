@@ -57,7 +57,7 @@ function populate() {
                 handleDisplay(acc, display)
             } else if (e.target.classList.contains('operator')) {
                 handleOperatorClick(e.target.id, display)
-            } else if (e.target.id === 'equals' && operands.length) {
+            } else if (e.target.id === 'equals' && operands.length && operator) {
                 handleEqualClick(display)
             } else if (e.target.id === 'clear') {
                 handleClearClick(display)
@@ -68,7 +68,26 @@ function populate() {
             }
         }
     })
+
+    document.addEventListener('keyup', (e) => handleKeyboardSupport(e, display));
+
 }
+
+//this is for keyboard support. i'll do this later
+function handleKeyboardSupport(event, display) {
+    const numbers = '1234567890';
+    if (numbers.includes(event.key)) {
+        acc += event.key;
+        display.textContent = acc;
+    } 
+
+    // switch (event) {
+    //     case '+':
+            
+    //         break;
+    // }
+}
+
 //updates the display in the UI
 function handleDisplay(value, display) {
     display.textContent = value;
@@ -104,9 +123,9 @@ function handleEqualClick(display) {
         total = operate(operator, operands);
         handleDisplay(total, display);
         operands = [total]; //sets the item of operands array to the total of operation
+        operator = "";
     }
 
-    operator = "";
     console.log(operands, operator);
 }
 //resets all values
@@ -120,7 +139,7 @@ function handleClearClick(display) {
 function handleDecimalClick(display) {
     let lastChar = acc.charAt(acc.length - 1);
     //if the last character is not a decimal point, add one
-    if (lastChar !== '.') {
+    if (lastChar !== '.' && acc) {
         acc += '.';
         display.textContent += '.';
         console.log(acc)
@@ -139,7 +158,7 @@ function handleNegativeClick(display) {
         acc = acc.slice(1);
         display.textContent = acc;
         console.log(acc)
-    //if it isn't add one
+        //if it isn't add one
     } else {
         acc = '-' + acc;
         display.textContent = acc;
