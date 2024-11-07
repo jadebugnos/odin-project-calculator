@@ -42,6 +42,10 @@ const operatorMap = {
     minus: '-',
     times: '*',
     divide: '/',
+    "+": "+",
+    "-": "-",
+    "*": "*",
+    "/": "/"
 }
 
 //contains all buttons eventlisteners and call respective functions when clicked
@@ -79,13 +83,14 @@ function handleKeyboardSupport(event, display) {
     if (numbers.includes(event.key)) {
         acc += event.key;
         display.textContent = acc;
-    } 
+    } else if (event.key === operatorMap[event.key]) {
+        handleOperatorClick(event.key, display);
+    } else if ((event.key === '=' || event.key === 'Enter') &&
+         operands.length && operator) {
+        handleEqualClick(display);
+    }
 
-    // switch (event) {
-    //     case '+':
-            
-    //         break;
-    // }
+    
 }
 
 //updates the display in the UI
@@ -100,6 +105,7 @@ function handleOperatorClick(targetId, display) {
         operands.push(Number(acc));
         acc = "";
     }
+    console.log(targetId)
     //if operator already has a value, call equal function
     if (operator) {
         handleEqualClick(display)
