@@ -19,8 +19,13 @@ function divide(...num) {
     return num.length ? num.reduce((a, b) => a / b) : 0;
 }
 
-function modulo(...num) {
-    return num.reduce((a, b) => a % b)
+function getPercentage(...num) {
+    const [a, b] = num;
+    if (num.length === 1) {
+        return a / 100;
+    } else if (num.length === 2) {
+        return a * (b / 100)
+    }
 }
 
 let operands = [];
@@ -37,7 +42,7 @@ function operate(operator, operands) {
         case '/':
             return divide(...operands);
         case '%':
-            return modulo(...operands);
+            return getPercentage(...operands);
     }
 }
 
@@ -47,12 +52,10 @@ const operatorMap = {
     minus: '-',
     times: '*',
     divide: '/',
-    percent: '%',
     "+": "+",
     "-": "-",
     "*": "*",
-    "/": "/",
-    "%": "%"
+    "/": "/"
 }
 
 //contains all buttons eventlisteners and call respective functions when clicked
@@ -76,6 +79,8 @@ function populate() {
                 handleDecimalClick(display)
             } else if (e.target.id === 'negative') {
                 handleNegativeClick(display)
+            } else if (e.target.id = 'percent') {
+                handlePercent(display)
             }
         }
     })
@@ -189,6 +194,22 @@ function handleNegativeClick(display) {
 function handleBackSpacePress(display) {
     acc = acc.slice(0, -1);
     display.textContent = acc;
+}
+
+function handlePercent(display) {
+    if (acc !== "") {
+        operands.push(Number(acc));
+        acc = "";
+    }
+
+    if (operands >= 1) {
+        operator = '%';
+        let percentage = operate(operator, operands);
+        handleDisplay(percentage, display)
+        operator = "";
+        operands = [percentage];
+        console.log(operator, operands);
+    }
 }
 
 populate()
