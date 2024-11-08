@@ -28,9 +28,7 @@ function getPercentage(...num) {
     }
 }
 
-let operands = [];
-let operator;
-
+//calls respective functions to do the calculations
 function operate(operator, operands) {
     switch (operator) {
         case '+':
@@ -46,7 +44,10 @@ function operate(operator, operands) {
     }
 }
 
+//accumulates the number before getting pushed to operands
 let acc = '';
+let operands = [];
+let operator;
 const operatorMap = {
     plus: '+',
     minus: '-',
@@ -62,6 +63,11 @@ const operatorMap = {
 function populate() {
     const display = document.getElementById('display');
     const buttonsContainer = document.querySelector('#button-containers');
+    const percentButton = document.querySelector('#percent');
+
+    percentButton.addEventListener('click', e => {
+        handlePercent(display);
+    })
 
     buttonsContainer.addEventListener('click', (e) => {
 
@@ -72,6 +78,7 @@ function populate() {
             } else if (e.target.classList.contains('operator')) {
                 handleOperatorClick(e.target.id, display)
             } else if (e.target.id === 'equals' && operands.length && operator) {
+                e.stopPropagation()
                 handleEqualClick(display)
             } else if (e.target.id === 'clear') {
                 handleClearClick(display)
@@ -79,8 +86,6 @@ function populate() {
                 handleDecimalClick(display)
             } else if (e.target.id === 'negative') {
                 handleNegativeClick(display)
-            } else if (e.target.id = 'percent') {
-                handlePercent(display)
             }
         }
     })
@@ -144,7 +149,7 @@ function handleEqualClick(display) {
 
     let total;
     //only executes if the operands array has two values
-    if (operands.length >= 2) {
+    if (operands.length === 2 && operator) {
         total = operate(operator, operands);
         handleDisplay(total, display);
         operands = [total]; //sets the item of operands array to the total of operation
@@ -190,25 +195,27 @@ function handleNegativeClick(display) {
         console.log(acc);
     }
 }
-
+//deletes 1 number to the right when backspace is pressed
 function handleBackSpacePress(display) {
     acc = acc.slice(0, -1);
     display.textContent = acc;
 }
 
+//this code is buggy i am commenting it out to be fix later
+//calls operate() which calls getPercentage() when % is pressed/click
 function handlePercent(display) {
     if (acc !== "") {
         operands.push(Number(acc));
         acc = "";
     }
-
-    if (operands >= 1) {
-        operator = '%';
-        let percentage = operate(operator, operands);
-        handleDisplay(percentage, display)
+    //if operands is not empty execute all the codes
+    if (operands.length === 1) {
+        let percentage = operate('%', operands);
+        handleDisplay(percentage, display);
         operator = "";
         operands = [percentage];
-        console.log(operator, operands);
+        console.log(operands);
+        console.log(operator)
     }
 }
 
