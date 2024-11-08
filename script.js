@@ -19,6 +19,9 @@ function divide(...num) {
     return num.length ? num.reduce((a, b) => a / b) : 0;
 }
 
+function modulo(...num) {
+    return num.reduce((a, b) => a % b)
+}
 
 let operands = [];
 let operator;
@@ -33,6 +36,8 @@ function operate(operator, operands) {
             return multiply(...operands);
         case '/':
             return divide(...operands);
+        case '%':
+            return modulo(...operands);
     }
 }
 
@@ -42,10 +47,12 @@ const operatorMap = {
     minus: '-',
     times: '*',
     divide: '/',
+    percent: '%',
     "+": "+",
     "-": "-",
     "*": "*",
-    "/": "/"
+    "/": "/",
+    "%": "%"
 }
 
 //contains all buttons eventlisteners and call respective functions when clicked
@@ -83,9 +90,11 @@ function handleKeyboardSupport(event, display) {
 
     if (numbers.includes(event.key)) {
         acc += event.key;
-        display.textContent = acc;
+        handleDisplay(acc, display);
+        //check if an operator is pressed
     } else if (event.key === operatorMap[event.key]) {
         handleOperatorClick(event.key, display);
+        //the parenthesis makes sure the || comparisons are evaluated first before the && operator
     } else if ((event.key === '=' || event.key === 'Enter') &&
         operands.length && operator) {
         handleEqualClick(display);
@@ -95,8 +104,7 @@ function handleKeyboardSupport(event, display) {
         handleBackSpacePress(display);
     } else if (event.key === 'Delete') {
         handleClearClick(display);
-    } 
-
+    }
 }
 
 //updates the display in the UI
@@ -119,7 +127,7 @@ function handleOperatorClick(targetId, display) {
     //assigns new operator after operate is executed in handleEqualClick
     //avoids using the current targetId in operate execution
     operator = operatorMap[targetId]
-    console.log(operands, operator)
+    console.log(operands, operator, acc)
 }
 
 function handleEqualClick(display) {
