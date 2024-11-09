@@ -114,7 +114,10 @@ function handleKeyboardSupport(event, display) {
         handleBackSpacePress(display);
     } else if (event.key === 'Delete') {
         handleClearClick(display);
+    } else if (event.key === '%') {
+        handlePercent(display);
     }
+
 }
 
 //updates the display in the UI
@@ -197,8 +200,22 @@ function handleNegativeClick(display) {
 }
 //deletes 1 number to the right when backspace is pressed
 function handleBackSpacePress(display) {
-    acc = acc.slice(0, -1);
-    display.textContent = acc;
+    if (acc) {
+        acc = acc.slice(0, -1);
+        display.textContent = acc;
+        console.log('bakcspace is pressed')
+    } else if (!acc && operands.length > 0) {
+        //converts item to string then removes last number then convert back to number
+        operands[0] = parseInt(operands[0].toString().slice(0, -1));
+        display.textContent = operands[0];
+    }
+    
+    if (isNaN(operands[0]) || operands[0] === "") {
+        operands.pop(); // Remove the last element if no digits are left
+        display.textContent = ""; // Clear the display
+    } else {
+        display.textContent = operands[0]; // Update display if valid
+    }
 }
 
 //this code is buggy i am commenting it out to be fix later
@@ -209,7 +226,7 @@ function handlePercent(display) {
         acc = "";
     }
     //if operands is not empty execute all the codes
-    if (operands.length === 1) {
+    if (operands.length) {
         let percentage = operate('%', operands);
         handleDisplay(percentage, display);
         operator = "";
