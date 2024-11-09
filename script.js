@@ -45,7 +45,7 @@ function operate(operator, operands) {
 }
 
 //accumulates the number before getting pushed to operands
-let acc = '';
+let acc = "";
 let operands = [];
 let operator;
 const operatorMap = {
@@ -64,7 +64,7 @@ function populate() {
     const display = document.getElementById('display');
     const buttonsContainer = document.querySelector('#button-containers');
     const percentButton = document.querySelector('#percent');
-
+    //seperate event listener to avoid conflict with equal button 
     percentButton.addEventListener('click', e => {
         handlePercent(display);
     })
@@ -152,7 +152,7 @@ function handleEqualClick(display) {
 
     let total;
     //only executes if the operands array has two values
-    if (operands.length === 2 && operator) {
+    if (operands.length >= 2 && operator) {
         total = operate(operator, operands);
         handleDisplay(total, display);
         operands = [total]; //sets the item of operands array to the total of operation
@@ -200,25 +200,21 @@ function handleNegativeClick(display) {
 }
 //deletes 1 number to the right when backspace is pressed
 function handleBackSpacePress(display) {
-    if (acc) {
-        acc = acc.slice(0, -1);
-        display.textContent = acc;
-        console.log('bakcspace is pressed')
-    } else if (!acc && operands.length > 0) {
-        //converts item to string then removes last number then convert back to number
+    if (acc !== "") {
+        acc = acc.substring(0, acc.length - 1);
+    } else if (!acc && operands.length) {
         operands[0] = parseInt(operands[0].toString().slice(0, -1));
-        display.textContent = operands[0];
     }
-    
+    //removes the item if it is not a number
     if (isNaN(operands[0]) || operands[0] === "") {
-        operands.pop(); // Remove the last element if no digits are left
-        display.textContent = ""; // Clear the display
-    } else {
-        display.textContent = operands[0]; // Update display if valid
-    }
+        operands.pop();
+    } 
+
+    display.textContent = operands.length > 0 ? operands[0] : acc;
 }
 
-//this code is buggy i am commenting it out to be fix later
+
+
 //calls operate() which calls getPercentage() when % is pressed/click
 function handlePercent(display) {
     if (acc !== "") {
