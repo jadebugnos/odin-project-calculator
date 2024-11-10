@@ -98,7 +98,7 @@ function populate() {
 
 }
 
-//this is for keyboard support. i'll do this later
+//this is for keyboard support event listeners
 function handleKeyboardSupport(event, display) {
     const numbers = '1234567890';
 
