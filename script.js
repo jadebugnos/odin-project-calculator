@@ -72,9 +72,9 @@ function populate() {
     buttonsContainer.addEventListener('click', (e) => {
 
         if (e.target !== e.currentTarget) {
-            if (e.target.classList.contains('digit')) {
-                acc += e.target.value;
-                handleDisplay(acc, display)
+            if (e.target.classList.contains('digit') && acc.length <= 20) {
+                    acc += e.target.value;
+                    handleDisplay(acc, display);
             } else if (e.target.classList.contains('operator')) {
                 handleOperatorClick(e.target.id, display)
             } else if (e.target.id === 'equals' && operands.length && operator) {
@@ -98,7 +98,7 @@ function populate() {
 function handleKeyboardSupport(event, display) {
     const numbers = '1234567890';
 
-    if (numbers.includes(event.key)) {
+    if (numbers.includes(event.key) && acc.length <= 13) {
         acc += event.key;
         handleDisplay(acc, display);
         //check if an operator is pressed
@@ -132,7 +132,6 @@ function handleOperatorClick(targetId, display) {
         operands.push(Number(acc));
         acc = "";
     }
-    console.log(targetId)
     //if operator already has a value, call equal function
     if (operator) {
         handleEqualClick(display)
@@ -140,7 +139,6 @@ function handleOperatorClick(targetId, display) {
     //assigns new operator after operate is executed in handleEqualClick
     //avoids using the current targetId in operate execution
     operator = operatorMap[targetId]
-    console.log(operands, operator, acc)
 }
 
 function handleEqualClick(display) {
@@ -158,8 +156,6 @@ function handleEqualClick(display) {
         operands = [total]; //sets the item of operands array to the total of operation
         operator = "";
     }
-
-    console.log(operands, operator);
 }
 //resets all values
 function handleClearClick(display) {
@@ -172,14 +168,12 @@ function handleClearClick(display) {
 function handleDecimalClick(display) {
     let lastChar = acc.charAt(acc.length - 1);
     //if the last character is not a decimal point, add one
-    if (lastChar !== '.' && acc) {
+    if (lastChar !== '.' && acc && !acc.includes('.')) {
         acc += '.';
         display.textContent += '.';
-        console.log(acc)
         //if it is, remove the decimal point
     } else if (lastChar === '.') {
         acc = acc.slice(0, -1);
-        console.log(acc)
         display.textContent = acc;
     }
 }
@@ -190,12 +184,10 @@ function handleNegativeClick(display) {
     if (firstChar === '-') {
         acc = acc.slice(1);
         display.textContent = acc;
-        console.log(acc)
         //if it isn't add one
     } else {
         acc = '-' + acc;
         display.textContent = acc;
-        console.log(acc);
     }
 }
 //deletes 1 number to the right when backspace is pressed
@@ -207,13 +199,8 @@ function handleBackSpacePress(display) {
         operands[0] = operands[0].toString().slice(0, -1);
         acc = operands.pop();
     } else if (acc && operands.length) {
-        acc = acc.substring(0, acc.length - 1);
+        acc = acc.slice(0, -1);
     }
-
-    //removes the item if it is not a number
-    // if (isNaN(operands[0]) || operands[0] === "") {
-    //     operands.pop();
-    // } 
 
     display.textContent = operands.length > 0 && !acc ? operands[0] : acc;
 }
@@ -232,8 +219,6 @@ function handlePercent(display) {
         handleDisplay(percentage, display);
         operator = "";
         operands = [percentage];
-        console.log(operands);
-        console.log(operator)
     }
 }
 
