@@ -2,50 +2,50 @@
 
 a simple calculator built as part of The Odin Project curriculum. This project combines HTML, CSS, and JavaScript to create an interactive calculator that handles basic arithmetic operations.
 
-#Demo
+## Demo
 
-https://jadebugnos.github.io/odin-project-calculator/
+ https://jadebugnos.github.io/odin-project-calculator/
 
-#Features
+## Features
 
-*Basic arithmetic operations: addition, subtraction,multiplication, division and calculating percentage.
+* Basic arithmetic operations: addition, subtraction,multiplication, division and calculating percentage.
 
-*Clear button to reset the current calculation
+* Clear button to reset the current calculation
 
-*keyboard support to quick calculation
+* keyboard support to quick calculation
 
-*negative/positive Toggle: Switches the sign of the current input
+* negative/positive Toggle: Switches the sign of the current input
 
-*Decimal button: Enables decimal calculations
+* Decimal button: Enables decimal calculations
 
 
-#Technologies Used
+## Technologies Used
 
-*HTML:  Structure and layout of the calculator
-*CSS: Styling for a responsive and user-friendly interface
-*Javascript: Logic for calculator functionality
+* HTML:  Structure and layout of the calculator
+* CSS: Styling for a responsive and user-friendly interface
+* Javascript: Logic for calculator functionality
 
-#Usage
+## Usage
 1. Enter numbers and select operations using the calculator buttons.
 2. You can also use your keyboard for inputs:
-*Numbers: 0-9
-*Operators:+,-,*,/
-*Enter or = to calculate
-*Backspace to delete last entry
-*DEL to clear the calculator
-*. to add decimal point
+ * Numbers: 0-9
+ * Operators:+,-,*,/
+ * Enter or = to calculate
+ * Backspace to delete last entry
+ * DEL to clear the calculator
+ * . to add decimal point
 
-#Project Structure
+## Project Structure
 
 ├── index.html         # Main HTML file
 ├── style.css          # CSS for styling the calculator
 └── script.js          # JavaScript for calculator functionality
 
-#Learning Goals
+## Learning Goals
 
 This project helped reinforce concepts in:
-*DOM manipulation
-*Event handling
-*Functional programming principles in JavaScript
-*Building responsive web layouts with CSS Flexbox
+ * DOM manipulation
+ * Event handling
+ * Functional programming principles in JavaScript
+ * Building responsive web layouts with CSS Flexbox
 
