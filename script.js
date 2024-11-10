@@ -1,3 +1,7 @@
+// //Reminder: I have to make the floating points accurate. and imnpove the
+// UI design. I will comeback to this project later to finish it.
+
+
 function add(...addends) {
     return addends.reduce((a, b) => a + b, 0)
 }
