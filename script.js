@@ -203,14 +203,19 @@ function handleBackSpacePress(display) {
     if (acc !== "") {
         acc = acc.substring(0, acc.length - 1);
     } else if (!acc && operands.length) {
-        operands[0] = parseInt(operands[0].toString().slice(0, -1));
+        //deletes one 1 item before assigning it back to acc
+        operands[0] = operands[0].toString().slice(0, -1);
+        acc = operands.pop();
+    } else if (acc && operands.length) {
+        acc = acc.substring(0, acc.length - 1);
     }
-    //removes the item if it is not a number
-    if (isNaN(operands[0]) || operands[0] === "") {
-        operands.pop();
-    } 
 
-    display.textContent = operands.length > 0 ? operands[0] : acc;
+    //removes the item if it is not a number
+    // if (isNaN(operands[0]) || operands[0] === "") {
+    //     operands.pop();
+    // } 
+
+    display.textContent = operands.length > 0 && !acc ? operands[0] : acc;
 }
 
 
